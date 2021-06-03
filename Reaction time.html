@@ -1,0 +1,62 @@
+<html>
+	<head>
+		<title>function</title>
+		<style type="text/css">
+			#shape{
+				height:200px;	
+				width:200px;		
+				background-color:red;	
+				position:relative	
+			}
+			.bold{
+				font-weight:bold;
+			}
+			.wide{
+				font-size:50px;
+			}
+		</style>
+	</head>
+	<body>
+		<h1 class="wide">Test your Reaction!</h1>
+		<p>Click the boxes or circles as fast as you can!</p>
+		<p class="bold">Reaction Time: <span id="rt"></p>
+		<div id="shape"></div>
+		<script type="text/javascript">
+			var start=new Date().getTime();
+			function getColor(){
+				var letter='0123456789ABCDEF'.split('');
+				var color='#';
+				for(var i=0;i<6;i++){
+					color=color+letter[Math.floor(Math.random()*16)];
+				}
+				return color;
+			}
+			function makeAppear(){
+				var top=Math.random()*400;
+				var left=Math.random()*850;
+				var height=(Math.random()*250)+30;
+				document.getElementById("shape").style.top=top+"px";
+				document.getElementById("shape").style.left=left+"px";
+				document.getElementById("shape").style.height=height+"px";
+				document.getElementById("shape").style.width=height+"px";
+				document.getElementById("shape").style.backgroundColor=getColor();
+				if(Math.random()>0.5)
+					document.getElementById("shape").style.borderRadius="50%";
+				else
+					document.getElementById("shape").style.borderRadius="0";
+				document.getElementById("shape").style.display="Block";
+				start=new Date().getTime();
+			}
+			function AppearAfterDeletion(){
+				setTimeout(makeAppear,Math.random()*500);
+			}
+			document.getElementById("shape").onclick=function(){
+				document.getElementById("shape").style.display="none";
+				var end=new Date().getTime();
+				var time=(end-start)/1000;
+				document.getElementById("rt").innerHTML=time + "s";
+				AppearAfterDeletion();
+			}
+		</script>
+	</body>
+</html>
